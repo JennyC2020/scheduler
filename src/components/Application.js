@@ -55,14 +55,28 @@ const appointments = [
 
 
 export default function Application(props) {
-  const [initialDay, setDay] = useState('Monday');
-  const [days, setDays] = useState([]);
+
+  const [state, setState] = useState({
+    day: 'Monday',
+    days: [],
+    appointments: {},
+  });
+
+  const setDay = day => setState({ ...state, day });
+  //const setDays = days => setState(prev => ({ ...prev, days }));
+
 
   useEffect(() => {
-    axios.get('/api/days')
-      .then(result => {
-        setDays(result.data);
-      })
+    // axios.get('/api/days')
+    //   .then(result => {
+    //     setDays(result.data);
+    //   })
+    Promise.all([
+      axios.get('/api/days'),
+      axios.get('/api/appointments')
+    ]).then(all => {
+      setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data }));
+    });
   }, []);
 
   return (
@@ -75,8 +89,8 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <DayList
-          days={days}
-          day={initialDay}
+          days={state.days}
+          day={state.day}
           setDay={setDay}
         />
         <img

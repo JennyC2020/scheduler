@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DayList from 'components/DayList';
 import Appointment from 'components/Appointment';
-//import { getAppointmentsForDay, getInterview } from '../helpers/selectors';
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from '../helpers/selectors';
 
 
@@ -47,6 +46,16 @@ export default function Application(props) {
   }, []);
 
   const apptArray = getAppointmentsForDay(state, state.day);
+
+  const interviewersArray = getInterviewersForDay(state, state.day);
+
+  console.log('intArray', interviewersArray);
+
+
+  const bookInterview = (id, interview) => {
+    console.log(id, interview);
+  }
+
   const appointmentData = apptArray.map(appointment => {
     const interview = getInterview(state, appointment.interview)
     return <Appointment
@@ -54,6 +63,8 @@ export default function Application(props) {
       id={appointment.id}
       time={appointment.time}
       interview={interview}
+      interviewers={interviewersArray}
+      bookInterview={bookInterview}
     />
   });
 
@@ -84,7 +95,10 @@ export default function Application(props) {
       {
         <section className="schedule">
           {appointmentData}
-          <Appointment key="last" time="6pm" />
+          <Appointment key="last" time="6pm"
+            interviewers={interviewersArray}
+            bookInterview={bookInterview}
+          />
         </section>
       }
     </main>

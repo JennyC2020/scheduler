@@ -47,10 +47,6 @@ export default function Application(props) {
   }, []);
 
   const apptArray = getAppointmentsForDay(state, state.day);
-
-  const interviewersArray = getInterviewersForDay(state, state.day);
-
-
   const appointmentData = apptArray.map(appointment => {
     const interview = getInterview(state, appointment.interview)
     return <Appointment
@@ -60,7 +56,6 @@ export default function Application(props) {
       interview={interview}
     />
   });
-
 
   return (
     <main className="layout">
@@ -89,9 +84,7 @@ export default function Application(props) {
       {
         <section className="schedule">
           {appointmentData}
-          <Appointment key="last" time="6pm"
-            interviewers={interviewersArray}
-          />
+          <Appointment key="last" time="6pm" />
         </section>
       }
     </main>

@@ -9,6 +9,9 @@ import "components/Application.scss";
 const axios = require('axios');
 
 export default function Application(props) {
+  // const [days, setDays] = useState([]);
+  // const [day, setDay] = useState('Monday')
+  // const [appointments, setAppointments] = useState({});
 
   const [state, setState] = useState({
     day: 'Monday',
@@ -16,25 +19,34 @@ export default function Application(props) {
     appointments: {},
     interviewers: {}
   });
+
   const setDay = day => setState({ ...state, day })
+  // const setDays = days => setState(prev => ({ ...prev, days }));
 
   useEffect(() => {
     const promiseDays = axios.get('/api/days');
     const promiseAppointments = axios.get('/api/appointments');
     const promiseInterviewers = axios.get('/api/interviewers');
+
+
     Promise.all([promiseDays, promiseAppointments, promiseInterviewers]).then((all) => {
       let [days, appointments, interviewers] = all;
+
       days = days.data;
       appointments = appointments.data;
       interviewers = interviewers.data;
+
       console.log('days', days);
       console.log('appointments', appointments);
       console.log('interviewers', interviewers);
+
       setState(prev => ({ ...prev, days, appointments, interviewers }));
     })
   }, []);
+
   const apptArray = getAppointmentsForDay(state, state.day);
 
+  // don't know where exactly to be passing down the interviewersArray!
   const interviewersArray = getInterviewersForDay(state, state.day);
 
   const bookInterview = (id, interview) => {
@@ -46,6 +58,7 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
+
     console.log('appointment', appointment);
     console.log('appointments', appointments);
 
@@ -63,11 +76,8 @@ export default function Application(props) {
           appointments
         })
       })
-      .catch(err => {
-        console.log(err);
-      })
-  }
 
+  }
 
   const cancelInterview = (id) => {
 
@@ -96,12 +106,10 @@ export default function Application(props) {
           appointments
         })
       })
-      .catch(err => {
-        console.log(err);
-      })
 
   }
 
+  // axios.get('/api/debug/reset').then(res => console.log(res));
 
   const appointmentData = apptArray.map(appointment => {
     const interview = getInterview(state, appointment.interview)
@@ -115,6 +123,8 @@ export default function Application(props) {
       cancelInterview={cancelInterview}
     />
   });
+
+
 
   return (
     <main className="layout">

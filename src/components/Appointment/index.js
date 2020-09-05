@@ -7,36 +7,47 @@ import Form from './form';
 import { useVisualMode } from '../../hooks/useVisualMode';
 import Status from './Status';
 import Confirm from './Confirm';
+import Error from './Error';
 
 export default function Appointment(props) {
+
   const EMPTY = 'EMPTY';
   const SHOW = 'SHOW';
   const CREATE = 'CREATE';
   const SAVING = 'SAVING';
   const DELETING = 'DELETING';
   const CONFIRM = 'CONFIRM';
+  const ERROR_SAVE = 'ERROR_SAVE';
+  const ERROR_DELETE = 'ERROR_DELETE';
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+
   const save = (name, interviewer) => {
     const interview = {
       student: name,
       interviewer
     }
 
-    transition(SAVING);
+    transition(SAVING, true);
 
     props.bookInterview(props.id, interview).then(() => {
       transition(SHOW);
+    }).catch(() => {
+      transition(ERROR_SAVE, true);
     })
   }
 
   const deleteInterview = () => {
-    transition(DELETING);
+    transition(DELETING, true);
 
     props.cancelInterview(props.id).then(() => {
       transition(EMPTY);
+
+    }).catch((err) => {
+      console.log('ERROR!!', err)
+      transition(ERROR_DELETE, true);
     })
 
   }
@@ -44,7 +55,9 @@ export default function Appointment(props) {
   const confirmDelete = () => {
     transition(CONFIRM);
   }
-
+  const editInterview = () => {
+    transition(CREATE);
+  }
   return (
     <article className='appointment'>
       <Header
@@ -56,6 +69,7 @@ export default function Appointment(props) {
           student={props.interview.student}
           interviewer={props.interview.interviewer}
           onDelete={confirmDelete}
+          onEdit={editInterview}
         />
       )}
       {mode === CREATE && (
@@ -63,6 +77,8 @@ export default function Appointment(props) {
           interviewers={props.interviewers}
           onCancel={() => back()}
           onSave={save}
+          name={props.interview ? props.interview.student : ''}
+          interviewer={props.interview ? props.interview.interviewer.id : null}
         />
       )}
       {mode === SAVING && (
@@ -78,8 +94,19 @@ export default function Appointment(props) {
           onCancel={() => back()}
         />
       )}
+      {mode === ERROR_SAVE && (
+        <Error
+          message={'Could not save appointment.'}
+          onClose={() => back()}
+        />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error
+          message={'Could not cancel appointment.'}
+          onClose={() => back()}
+        />
+      )}
     </article>
   );
 
-
-} 
+}

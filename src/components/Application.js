@@ -93,10 +93,10 @@ export default function Application(props) {
     console.log('appointment', appointment);
     console.log('appointments', appointments);
 
-    setState({
-      ...state,
-      appointments
-    })
+    // setState({
+    //   ...state,
+    //   appointments
+    // })
 
     return axios.delete(`/api/appointments/${id}`)
       .then(res => {

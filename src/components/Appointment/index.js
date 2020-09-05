@@ -58,6 +58,9 @@ export default function Appointment(props) {
   const editInterview = () => {
     transition(CREATE);
   }
+
+  console.log('student', props.interview)
+
   return (
     <article className='appointment'>
       <Header

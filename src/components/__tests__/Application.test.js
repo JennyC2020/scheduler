@@ -7,7 +7,7 @@ import {
   waitForElement,
   fireEvent,
   getByText,
-  prettyDOM,
+  //prettyDOM,
   getAllByTestId,
   getByAltText,
   getByPlaceholderText,

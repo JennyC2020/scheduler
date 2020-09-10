@@ -8,6 +8,12 @@ Interview Scheduler is a React SPA that allows users to book, edit and cancel in
 
 !["Animated App"](https://github.com/JennyC2020/scheduler/blob/master/docs/scheduler.gif?raw=true)
 
+## Features
+
+- Create, edit and delete interview appointments
+- Browse days to see and edit appointment lists per-day
+- See available interview slots per day
+
 ## Setup
 
 Install dependencies with `npm install`.

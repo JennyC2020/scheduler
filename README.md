@@ -1,5 +1,13 @@
 # Interview Scheduler
 
+## Project Description
+
+Interview Scheduler is a React SPA that allows users to book, edit and cancel interviews. The data is persisted by the API server using a PostreSQL database. The state is managed using custom and built in hooks. The client application communicates with an API server over HTTP using axios. Jest and Cypress tests are used throughout the development of the project.
+
+## The App
+
+!["Animated App"](https://github.com/JennyC2020/scheduler/blob/master/public/images/scheduler.gif?raw=true)
+
 ## Setup
 
 Install dependencies with `npm install`.

@@ -6,7 +6,7 @@ Interview Scheduler is a React SPA that allows users to book, edit and cancel in
 
 ## The App
 
-!["Animated App"](https://github.com/JennyC2020/scheduler/blob/master/public/images/scheduler.gif?raw=true)
+!["Animated App"](https://github.com/JennyC2020/scheduler/blob/master/docs/scheduler.gif?raw=true)
 
 ## Setup
 

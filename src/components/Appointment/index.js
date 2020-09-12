@@ -9,6 +9,7 @@ import useVisualMode from "hooks/useVisualMode";
 import "./styles.scss";
 import Confirm from "./Confirm";
 
+// Different modes of the appointment
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
@@ -20,10 +21,12 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
+  // State machine hook which allows us to go forwards or backwards in the history of the component
   const {mode, transition, back} = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
+  // Helper to update and transition mode when saving appointment
   const save = (name, interviewer) => {
     if (!name || !interviewer) {
       transition(ERROR_SAVE);
@@ -42,7 +45,7 @@ export default function Appointment(props) {
       .then((response) => transition(SHOW))
       .catch((error) => transition(ERROR_SAVE));
   };
-
+  // Helper to update and transition mode when deleting appointment
   const destroy = () => {
     transition(DELETING, true);
     props
@@ -51,6 +54,7 @@ export default function Appointment(props) {
       .catch((error) => transition(ERROR_SAVE, true));
   };
 
+  // Conditional rendering based on the current "mode"
   return (
     <article className="appointment" data-testid="appointment">
       <Header time={props.time} />

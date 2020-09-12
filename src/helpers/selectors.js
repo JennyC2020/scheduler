@@ -1,3 +1,4 @@
+// Selects appointments for given day and returns them in an array
 export function getAppointmentsForDay(state, day) {
   if (!state.days.length) return [];
 
@@ -18,6 +19,7 @@ export function getAppointmentsForDay(state, day) {
   return appointments;
 }
 
+// Fetches the interviewer details and returns an interview object including the interviewer details
 export function getInterview(state, interview) {
   let result = {};
 
@@ -35,6 +37,7 @@ export function getInterview(state, interview) {
   return result;
 }
 
+// Selects interviewers for given day and returns them in an array
 export function getInterviewersForDay(state, day) {
   let results = [];
 

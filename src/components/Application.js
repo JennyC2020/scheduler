@@ -10,8 +10,10 @@ import {
 import useApplicationData from "../hooks/useApplicationData";
 
 export default function Application(props) {
+  // Import state management functions
   const {state, setDay, bookInterview, cancelInterview} = useApplicationData();
 
+  // Build schedule based on our fetched data
   const apptArray = getAppointmentsForDay(state, state.day);
   const interviewersArray = getInterviewersForDay(state, state.day);
 

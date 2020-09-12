@@ -8,6 +8,7 @@ export default function Form(props) {
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
 
+  // Clear form when user presses cancel
   const reset = () => {
     setName("");
     setInterviewer(null);
@@ -18,6 +19,8 @@ export default function Form(props) {
     props.onCancel();
   };
 
+  // Validate that student name is present and interviewer has been selected before saving
+  // Else, display descriptive error message
   function validate(name, interviewer) {
     if (name === "") {
       setError("Student name cannot be blank");
